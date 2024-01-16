@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Home - Scope</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="doctor/index.html"><strong aria-hidden="true">2.</strong> Doctor</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="doctor/doctor-setup.html"><strong aria-hidden="true">2.1.</strong> Doctor Setup</a></li><li class="chapter-item expanded "><a href="doctor/doctor-check.html"><strong aria-hidden="true">2.2.</strong> Doctor Check</a></li></ol></li><li class="chapter-item expanded "><a href="errors/known-error.html"><strong aria-hidden="true">3.</strong> Error Detection</a></li><li class="chapter-item expanded "><a href="report/upload.html"><strong aria-hidden="true">4.</strong> Report</a></li><li class="chapter-item expanded "><a href="report/intercept.html"><strong aria-hidden="true">5.</strong> Intercept</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Scope</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="scope"><a class="header" href="#scope">Scope</a></h1>
+<p>Scope allows teams to define development config for engineers. Scope is a tool for engineers, to make them more productive.</p>
+<p>The config falls into three major categories:</p>
+<ul>
+<li><a href="./doctor/index.html">Local setup</a></li>
+<li><a href="./errors/known-error.html">Error debugging locally</a></li>
+<li><a href="./report/upload.html">Generate great bug reports</a></li>
+</ul>
+<h2 id="config"><a class="header" href="#config">Config</a></h2>
+<p>Configuration for <code>scope</code> is done via Kubernetes-like yaml files that live inside the repo. By default, scope will search up for the config directory <code>.scope</code> and ready <code>*.yaml</code> and <code>*.yml</code> files.</p>
+<p>That means <code>.scope/foo.yaml</code> will be parsed as a config file, but <code>scope/foo.yaml</code> will not (notice the missing <code>.</code> before <code>scope</code>).</p>
+<p>A config file looks like</p>
+<pre><code class="language-yaml">apiVersion: scope.github.com/v1alpha
+kind: &lt;kind&gt;
+metadata:
+  name: a useful name
+spec:
+  ...
+</code></pre>
+<p>Currently, the only supported <code>apiVersion</code> is <code>scope.github.com/v1alpha</code>. Using <code>apiVersion</code> allows scope to evolve the config file and keep older versions of the config compatible.</p>
+<p>Unlike Kubernetes, the <code>name</code> field can be any string, without any DNS related constraints.</p>
+<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
+<p><code>scope</code> has 2 built-in commands that most engineers will use:</p>
+<ul>
+<li><code>doctor</code> - Run checks that will &quot;checkup&quot; your machine</li>
+<li><code>report</code> - Generate a bug report based from a command</li>
+</ul>
+<p>Beyond the built-in command, scope will also run any binary prefixed with <code>scope-</code>.</p>
+<p>Additionally, there is <code>list</code> that will output all the found configuration.</p>
+<p>Here is an example output of <code>scope list</code> run from the <code>examples/</code> directory.</p>
+<pre><code class="language-text">17:47:57  INFO More detailed logs at /tmp/scope/scope-root-20240112-SxCM.log
+17:47:57  INFO Doctor Checks
+17:47:57  INFO         Name                                Description                                           Path
+17:47:57  INFO ------------------------------------------------------------------------------------------------------------------------
+17:47:57  INFO     path-exists                Check your shell for basic functionality             .scope/doctor-check-path-exists.yaml
+17:47:57  INFO path-exists-fix-in-scope-dir           Check your shell for basic functionality            .scope/doctor-check-fix-in-scope.yaml
+17:47:57  INFO Doctor Setup
+17:47:57  INFO         Name                                Description                                           Path
+17:47:57  INFO ------------------------------------------------------------------------------------------------------------------------
+17:47:57  INFO        setup                          You need to run bin/setup                           .scope/doctor-setup.yaml
+17:47:57  INFO
+17:47:57  INFO Known Errors
+17:47:57  INFO         Name                                Description                                           Path
+17:47:57  INFO ------------------------------------------------------------------------------------------------------------------------
+17:47:57  INFO     error-exists                Check if the word error is in the logs                    .scope/known-error.yaml
+17:47:57  INFO
+17:47:57  INFO Commands
+17:47:57  INFO         Name                                Description
+17:47:57  INFO --------------------------------------------------------------------------------
+17:47:57  INFO         bar                 External sub-command, run `scope bar` for help
+17:47:57  INFO        doctor                Run checks that will &quot;checkup&quot; your machine
+17:47:57  INFO         foo                 External sub-command, run `scope foo` for help
+17:47:57  INFO         list             List the found config files, and resources detected
+17:47:57  INFO        report          Generate a bug report based from a command that was ran
+</code></pre>
+<p>Under the <code>Commands</code> section, notice two additional commands:</p>
+<ul>
+<li><code>bar</code> which is located in <code>.scope/bin/scope-bar</code></li>
+<li><code>foo</code> which is a binary on the <code>PATH</code></li>
+</ul>
+<p>Scope automatically adds <code>.scope/bin</code> to the path when searching. Allowing teams to add commands to scope in large repos. For example, in a mono-repo with multiple services, you may want to add a <code>deploy</code> command. The <code>deploy</code> command would come from the working dir.</p>
+<h2 id="cli-options"><a class="header" href="#cli-options">CLI Options</a></h2>
+<p>All commands support the following options</p>
+<pre><code class="language-text">Usage: scope [OPTIONS] &lt;COMMAND&gt;
+
+Options:
+  -d, --debug...                     A level of verbosity, and can be used multiple times
+  -w, --warn                         Enable warn logging
+  -e, --error                        Disable everything but error logging
+      --extra-config &lt;EXTRA_CONFIG&gt;  Add a paths to search for configuration. By default, `scope` will search up for `.scope` directories and attempt to load `.yml` and `.yaml` files for config. If the config directory is somewhere else, specifying this option will _add_ the paths/files to the loaded config [env: SCOPE_CONFIG_DIR=]
+      --disable-default-config       When set, default config files will not be loaded and only specified config will be loaded [env: SCOPE_DISABLE_DEFAULT_CONFIG=]
+  -C, --working-dir &lt;WORKING_DIR&gt;    Override the working directory
+      --run-id &lt;RUN_ID&gt;              When outputting logs, or other files, the run-id is the unique value that will define where these go. In the case that the run-id is re-used, the old values will be overwritten [env: SCOPE_RUN_ID=]
+  -h, --help                         Print help (see more with '--help')
+  -V, --version                      Print version
+</code></pre>
+<p>Normally, you will not need to set any of these files.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="doctor/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="doctor/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
