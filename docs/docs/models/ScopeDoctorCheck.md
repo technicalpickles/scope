@@ -1,8 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 10
 ---
 
 # ScopeDoctorCheck
+
+**Deprecated**, use [ScopeDoctorGroup](./ScopeDoctorGroup.md) instead.
+Scope will translate this file to a Group when running internally.
 
 Looking at `doctor-check-path-exists.yaml` in the example folder.
 
@@ -22,6 +25,16 @@ spec:
 ```
 
 The kind is `ScopeDoctorCheck`, letting scope know that this is a Check instruction.
+
+## Exit Codes
+
+Depending on the exit code, different effects will happen
+
+| Exit Code   | Check Effect                                                       | Fix Effect                                 |
+|-------------|--------------------------------------------------------------------|--------------------------------------------|
+| `0`         | No work needed                                                     | Fix was successful                         |
+| `1 - 99`    | Work required                                                      | Fix ran, but failed                        |
+| `100+`      | Work is required, but fix should not run. Do not run other checks. | Fix ran, failed, and execution should stop |
 
 ## Schema
 

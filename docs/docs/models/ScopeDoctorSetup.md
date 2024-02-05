@@ -1,8 +1,11 @@
 ---
-sidebar_position: 1
+sidebar_position: 11
 ---
 
 # ScopeDoctorSetup
+
+**Deprecated**, use [ScopeDoctorGroup](./ScopeDoctorGroup.md) instead.
+Scope will translate this file to a Group when running internally.
 
 ```yaml
 apiVersion: scope.github.com/v1alpha
@@ -21,6 +24,16 @@ spec:
 ```
 
 The kind is `ScopeDoctorSetup`, letting scope know that this is a Setup instruction.
+
+## Exit Codes
+
+Depending on the exit code, different effects will happen
+
+| Exit Code   | Setup                                              |
+|-------------|----------------------------------------------------|
+| `0`         | Fix was successful                                 |
+| `1 - 99`    | Fix ran, but failed, other steps should still run. |
+| `100+`      | Fix ran, failed, and execution should stop         |
 
 ## Schema
 
